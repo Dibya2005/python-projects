@@ -1,0 +1,84 @@
+import random
+def spin_row():
+    """
+    Simulates a spin of a row in a slot machine.
+    Returns a list of 3 random symbols.
+    """
+    import random
+    symbols = ['🍓','🍊','🍉','🔆','🔔']
+    return [random.choice(symbols) for _ in range(3)]
+def print_row(row):
+    """
+    Prints a row of symbols.
+    """
+    print(" | ".join(row)) #join each element in the list 
+def getpayout(row1,bet):  
+    """
+    Calculates the payout based on the row of symbols.
+    """
+    if row1[0] == row1[1] == row1[2]:
+        if row1[0] == '🍓':
+            payout = bet * 10
+        elif row1[0] == '🍊':
+            payout = bet * 5
+        elif row1[0] == '🍉':
+            payout = bet * 3
+        elif row1[0] == '🔆':
+            payout = bet * 2
+        elif row1[0] == '🔔':
+            payout = bet * 1
+        else:
+            payout = 0
+    else:
+        payout = 0
+    return payout
+  
+def main():
+    balance = 100
+    print("="*40)
+    print("🎰 Welcome to the Slot Machine!")
+    print("🎯 Symbols: 🍓 🍊 🍉 🔆 🔔")
+    print("💰 You start with $100")
+    print("="*40)
+
+    while True:
+        print(f"\n💵 Current Balance: ${balance}")
+        bet_input = input("Enter your bet amount (or 0 to exit): $")
+
+        # Check if input is numeric
+        if not bet_input.isdigit():
+            print("❌ Invalid input. Please enter a positive number.")
+            continue
+
+        bet = int(bet_input)
+
+        if bet == 0:
+            print("👋 Thanks for playing! Final balance: $", balance)
+            break
+        elif bet < 0:
+            print("❌ Bet cannot be negative.")
+            continue
+        elif bet > balance:
+            print("❌ You can't bet more than your current balance.")
+            continue
+
+        balance -= bet
+        print("\n🎲 Spinning the reels...")
+        row1 = spin_row()
+        print_row(row1)
+
+        payout = getpayout(row1, bet)
+        if payout > 0:
+            print(f"🎉 You won ${payout}!")
+            balance += payout
+        else:
+            print("😢 No match. You lost your bet.")
+
+        if balance <= 0:
+            print("\n💸 You're out of money! Game over.")
+            break
+
+        print("-" * 40)
+    print("🎰 Thanks for playing! Your final balance is $", balance )
+if __name__ == '__main__':
+  main()
