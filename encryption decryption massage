@@ -1,0 +1,28 @@
+import random
+import string
+chars=" "+string.punctuation+string.ascii_letters+string.digits #!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
+
+print(chars)
+chars=list(chars)#comnvert string to list
+key=chars.copy()#copy the list
+
+random.shuffle(key)#shuffle the list
+# print(f"key: {key}")
+# print(f"chars: {chars}")
+#we will use the key to encrypt the message
+#replace each character in the message with the corresponding character in the key
+plaintext=input("enter the message to encrypt: ")
+ciphertext=""
+for char in plaintext:
+    index=chars.index(char)#get the index of the character in the chars list
+    ciphertext+=key[index]#add the character at the same index in the key list to the ciphertext
+print(f"original message: {plaintext}")
+print(f"encrypted message: {ciphertext}")
+#decryption
+#replace each character in the ciphertext with the corresponding character in the chars list
+decryptedtext=input("enter the message to decrypt: ")
+plaintext=""
+for char in decryptedtext:
+    index=key.index(char)#get the index of the character in the key list
+    plaintext+=chars[index]#add the character at the same index in the chars list to the plaintext
+print(f"decrypted message: {plaintext}")
